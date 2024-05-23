@@ -1,0 +1,150 @@
+body {
+    font-family: 'Rubik', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-header {
+    background-color: #222;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.admin-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-header .logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+.navbar .navbar-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar .navbar-item {
+    margin-left: 20px;
+}
+
+.navbar .navbar-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.section {
+    padding: 40px 0;
+}
+
+.section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.stat-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.stat-item p {
+    margin: 0;
+    font-weight: 500;
+}
+
+.stat-item h3 {
+    margin: 10px 0 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.appointments-table th, .appointments-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.appointments-table th {
+    background-color: #222;
+    color: #fff;
+}
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-edit {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.btn-delete {
+    background-color: #F44336;
+    color: #fff;
+    margin-left: 5px;
+}
+
+.settings-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.settings-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.settings-form .input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-save {
+    background-color: #222;
+    color: #fff;
+    width: 100%;
+}
+
+.admin-footer {
+    background-color: #222;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}

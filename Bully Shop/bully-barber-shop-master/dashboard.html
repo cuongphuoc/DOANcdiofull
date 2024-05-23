@@ -1,0 +1,160 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Bully BarberShop</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+    <!-- Custom CSS link -->
+    <link rel="stylesheet" href="./assets/css/admin-style.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
+
+    <!-- Google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik:wght@300,400;700&display=swap" rel="stylesheet">
+
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="admin-header">
+        <div class="container">
+            <a href="#" class="logo">Bully BarberShop Admin</a>
+            <nav class="navbar">
+                <ul class="navbar-list">
+                    <li class="navbar-item"><a href="#dashboard" class="navbar-link">Dashboard</a></li>
+                    <li class="navbar-item"><a href="#appointments" class="navbar-link">Appointments</a></li>
+                    <li class="navbar-item"><a href="#settings" class="navbar-link">Settings</a></li>
+                    <li class="navbar-item"><a href="#logout" class="navbar-link">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <section id="dashboard" class="section dashboard">
+            <div class="container">
+                <h2 class="section-title">Dashboard</h2>
+                <div class="stats">
+                    <div class="stat-item">
+                        <p>Total Appointments</p>
+                        <h3 id="sum"></h3>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="appointments" class="section appointments">
+            <div class="container">
+                <h2 class="section-title">Appointments</h2>
+                <table class="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Message</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodytable">
+                       
+                        <!-- Additional rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="admin-footer">
+        <div class="container">
+            <p>&copy; 2024 Bully BarberShop. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        $(document).ready(function() {
+            // Fetch data from the server
+            var socket = io("http://localhost:3000");
+            socket.on('message', function(msg) {
+            location.reload();
+            });
+            $.ajax({
+                url: 'http://localhost:3000/datlich',
+                method: 'GET',
+                success: function(data) {
+                    // Iterate over each item in the data array
+                    $("#sum").text(data.length);
+                    
+                    data.forEach(function(item, index) {
+                        console.log(item.hoTen);
+                        // Create a new table row
+                        var row = `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${item.hoTen}</td>
+                                <td>${item.email}</td> <!-- Assuming 'email' field is present in the data -->
+                                <td>${item.soDienThoai}</td>
+                                <td>${item.loaiDichVu}</td>
+                                <td>${item.ngayDatLich}</td>
+                                <td>${item.message}</td>
+                                <td>
+                                   
+                                    <button class="btn btn-delete"  _id="${item._id}">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+
+                        // Append the new row to the table body
+                        $('#bodytable').append(row);
+                    });
+                },
+                error: function(error) {
+                    console.log('Error fetching data:', error);
+                }
+            });
+            $(document).on('click', '.btn-delete', function() {
+                var buttonId = $(this).attr('_id');
+                console.log('ID của nút xóa:', buttonId);
+                 // Gửi yêu cầu xóa đến server qua AJAX
+                 $.ajax({
+                        url: 'http://localhost:3000/datlich',
+                        method: 'DELETE',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ id: buttonId }),
+                        success: function(response) {
+                            alert('Xóa thành công');
+                            location.reload();
+                            // Xóa hàng trong bảng sau khi xóa thành công
+                            $(this).closest('tr').remove();
+                        },
+                        error: function(error) {
+                            console.error('Lỗi khi xóa:', error);
+                            alert('Xóa thất bại');
+                        }
+                    });
+                // Thêm các hành động khác tại đây (ví dụ: gửi yêu cầu xóa đến server)
+                // ...
+            });
+        });
+       
+    </script>
+</body>
+</html>
